@@ -11,6 +11,11 @@ app.set('views', __dirname + '/views');
 app.set('view engine', 'ejs');
 app.engine('html', require('ejs').renderFile);
 
+// 정적 파일(HTML에서 사용되는 .js/css/이미지 파일 등)
+// express.static() 메소드를 통해 다룰 수 있다.
+// public/dist 디렉터리 아래 있는 정적 파일을 적용한다.
+app.use(express.static('public/dist'));
+
 var server = app.listen(3000, function(){
   console.log("Express server has started on port 3000")
 });
