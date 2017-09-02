@@ -20,7 +20,7 @@ var server = app.listen(3000, function(){
 // 정적 파일(HTML에서 사용되는 .js/css/이미지 파일 등)
 // express.static() 메소드를 통해 다룰 수 있다.
 // public/dist 디렉터리 아래 있는 정적 파일을 적용한다.
-app.use(express.static('public/dist'));
+app.use(express.static(__dirname + '/public/dist'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
