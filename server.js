@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 var fs = require('fs');
 
-// 서버가 읽을 수 있도록 HTML의 위치를 정의해준다.
+// 서버가 읽을 수 있도록 ejs의 위치를 정의해준다.
 app.set('views', __dirname + '/views');
 // 서버가 HTML 렌더링을 할 때, EJS 엔진을 사용하도록 설정한다.
 app.set('view engine', 'ejs');
@@ -34,4 +34,5 @@ app.use(session ({
 // 라우터 모듈인 main.js를 불러와서 app에 전달해준다.
 // 라우터가 bodyParser 설정 아래에 있으면 제대로 작동하지 않는다.
 // 라우터에서 fs모듈을 사용할 수 있도록 인자로 추가해준다.
+
 var router = require('./router/main')(app, fs);
