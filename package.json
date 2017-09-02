@@ -11,6 +11,7 @@
   "dependencies": {},
   "description": "",
   "devDependencies": {
+    "ejs": "^2.5.7",
     "eslint-config-airbnb-base": "^11.3.2",
     "eslint-plugin-html": "^3.2.0",
     "eslint-plugin-import": "^2.7.0",
