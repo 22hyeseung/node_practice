@@ -23,11 +23,11 @@ var server = app.listen(3000, function(){
 app.use(express.static('public/dist'));
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(session ({
   secret: '@#@$MYSIGN#@$#$', // 쿠키를 임의로 변조하는 것을 방지하는 sign값.
   resave: false, // 세션을 언제나(변경된 것이 없어도) 저장할지를 설정, false가 권장됨.
-  saveUninitialized: true, // uninitialized 세션: 새로 생겼지만, 변경되지 않은 세션 -> 저장할 것인가? true가 권장됨.
+  saveUninitialized: true // uninitialized 세션: 새로 생겼지만, 변경되지 않은 세션 -> 저장할 것인가? true가 권장됨.
 }));
 
 
