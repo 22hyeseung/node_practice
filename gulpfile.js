@@ -48,7 +48,7 @@ gulp.task('compress-html', function () {
 
 // js lint
 gulp.task('lint', function(){
-  gulp.src(paths.js)
+  gulp.src('./**/*.js')
     .pipe(jshint())
 })
 
