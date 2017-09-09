@@ -87,22 +87,22 @@ module.exports = function (app, fs) {
       users[username] = req.body;
 
       // 데이터 저장
-      fs.writeFile(__dirname + '../data/user.json', JSON.stringify(users, null, '\t'), function(err, data){
-        result = {"success": 1};
+      fs.writeFile(__dirname + '../data/user.json', JSON.stringify(users, null, '\t'), function (err, data) {
+        result = { "success": 1 };
         res.json(result);
       })
     })
   });
 
-  app.delete('/deleteUser/:username', function(req, res){
+  app.delete('/deleteUser/:username', function (req, res) {
     var result = {};
 
     // 데이터 로드
-    fs.readFile(__dirname + '/../data/user.json', 'utf8', function(err, data){
+    fs.readFile(__dirname + '/../data/user.json', 'utf8', function (err, data) {
       var users = JSON.parse(data);
 
       // 데이터를 찾을 수 없다면
-      if(!users[req.params.username]){
+      if (!users[req.params.username]) {
         result["success"] = 0;
         result["error"] = "데이터를 찾을 수 없습니다."
         res.json(result);
@@ -113,11 +113,43 @@ module.exports = function (app, fs) {
       delete users[req.params.username];
 
       // 데이터 저장하기
-      fs.writeFile(__dirname + '/../data/user.json', JSON.stringify(users, null, '\t'), 'utf8', function(err, data){
+      fs.writeFile(__dirname + '/../data/user.json', JSON.stringify(users, null, '\t'), 'utf8', function (err, data) {
         result["success"] = 1;
         res.json(result);
         return;
       })
     })
-  })
+  });
+
+  // 세션을 이용한 로그인
+  app.get('/login/:username/:password', function (req, res) {
+    var sess;
+    sess = req.session;
+
+    fs.readFile(__dirname + "/../data", 'utf8', function (err, data) {
+      var users = JSON.parse(data);
+      var username = req.params.username;
+      var password = req.params.password;
+      var result = {};
+      if (!users[username]) {
+        // username을 찾을 수 없다면 작업을 종료
+        result["success"] = 0;
+        result["error"] = "존재하지 않는 아이디입니다.";
+        res.json(result);
+        return;
+      }
+
+      if(users[username]["password"] == password){
+        result["success"] = 1;
+        sess.username = username;
+        sess.name = users[username]["name"];
+        res.json(result);
+      } else {
+        result["success"] = 0;
+        result["error"] = "incorrect";
+        res.json(result);
+      }
+    })
+  });
+
 }
